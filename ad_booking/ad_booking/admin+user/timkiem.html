@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Hotel Search Results with Room Description</title>
+<style>
+  /* General Styling */
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+  }
+  .container {
+    display: flex;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .sidebar {
+    width: 25%;
+    padding: 20px;
+    background-color: #fff;
+    border-right: 1px solid #ddd;
+    position: sticky; /* Giữ sidebar cố định */
+    top: 0; /* Đặt vị trí cố định từ trên cùng */
+    height: 100vh; /* Chiều cao 100% của viewport */
+    overflow-y: auto; /* Thêm cuộn nếu nội dung vượt quá chiều cao */
+  }
+  .main-content {
+    width: 75%;
+    padding: 20px;
+  }
+
+  /* Sidebar */
+  .map-button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    background-color: #0071c2;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+  .map-button:hover {
+    background-color: #0056a3;
+  }
+  .sidebar h3 {
+    margin-top: 20px;
+    font-size: 1.1em;
+  }
+  .filter-section {
+    margin: 10px 0;
+  }
+  .filter-section label {
+    display: block;
+    margin: 5px 0;
+    font-size: 0.9em;
+    line-height: 30px;
+  }
+
+  /* Updated Results Header */
+  .results-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding: 15px; /* Thêm padding để tạo không gian */
+    background-color: #e1f5fe; /* Màu nền nhẹ */
+    border-radius: 5px; /* Bo góc */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Đổ bóng */
+  }
+  .results-header h4 {
+    font-size: 1.5em;
+    margin: 0;
+    color: #0071c2; /* Màu chữ */
+  }
+  .results-header select {
+    padding: 8px; /* Tăng kích thước padding */
+    border-radius: 5px;
+    border: 1px solid #0071c2; /* Viền màu */
+    background-color: #fff; /* Nền trắng */
+  }
+
+  /* Inline Class */
+  .inline {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Căn giữa */
+    margin: 0 10px; /* Thêm khoảng cách giữa các phần tử */
+    flex-wrap: wrap; /* Cho phép xuống dòng nếu không đủ chỗ */
+  }
+  .inline h4 {
+    margin: 0 10px; /* Thêm khoảng cách giữa các tiêu đề */
+  }
+
+  /* Hotel Listing */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  th, td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: center;
+  }
+  th {
+    background-color: #0071c2;
+    color: #fff;
+  }
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  tr:hover {
+    background-color: #e1f5fe;
+  }
+  .button-edit {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  .button-edit:hover {
+    background-color: #218838;
+  }
+
+  /* Pricing */
+  .price {
+    margin-top: 10px;
+    color: #d9534f;
+  }
+  .old-price {
+    text-decoration: line-through;
+    color: #666;
+  }
+  .current-price {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #d9534f;
+  }
+
+  /* Button */
+  .availability-button {
+    width: 300px;
+    padding: 10px 20px;
+    background-color: #0071c2;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-size: 0.9em;
+    text-align: center;
+    transition: background-color 0.3s ease;
+  }
+  .availability-button a {
+    text-decoration: none;
+    color: #ffffff;
+    display: block;
+  }
+  .availability-button:hover {
+    background-color: #0056a3;
+  }
+  .availability-button a:hover {
+    color: #cccbcb;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <!-- Sidebar Filters -->
+  <aside class="sidebar">
+    <button class="map-button">Hiển thị trên bản đồ</button>
+    <h3>Chọn lọc theo:</h3>
+    <div class="filter-section">
+      <h3>Dùng các bộ lọc cũ</h3>
+      <label><input type="checkbox" /> Nhà khách</label>
+      <label><input type="checkbox" /> Nhà nghỉ B&B</label>
+      <label><input type="checkbox" /> Nhà nghỉ trang trại</label>
+      <label><input type="checkbox" /> Căn hộ</label>
+      <label><input type="checkbox" /> Biệt thự</label>
+      <label><input type="checkbox" /> Khách sạn</label>
+      <label><input type="checkbox" /> Resort</label>
+    </div>
+
+    <h3>Ngân sách của bạn (mỗi đêm)</h3>
+    <input
+      type="range"
+      id="budgetRange"
+      min="50"
+      max="3000"
+      oninput="updateBudgetValue()"
+    />
+    <span id="budgetValue" class="budget-value">$50</span>
+    <div class="filter-section">
+      <h3>Các bộ lọc miễn phí</h3>
+      <label><input type="checkbox" /> Miễn phí hủy</label>
+      <label><input type="checkbox" /> Máy giặt</label>
+      <label><input type="checkbox" /> Rất tốt: 8 điểm trở lên</label>
+      <label><input type="checkbox" /> Phòng tắm riêng</label>
+      <label><input type="checkbox" /> Điều hòa không khí</label>
+      <label><input type="checkbox" /> Khu vực bếp</label>
+      <label><input type="checkbox" /> Có máy sưởi</label>
+      <h3>Tiện nghi</h3>
+      <label><input type="checkbox" /> Chỗ đỗ xe</label>
+      <label><input type="checkbox" /> Nhà hàng</label>
+      <label><input type="checkbox" /> Cho phép mang theo vật nuôi</label>
+      <label><input type="checkbox" /> Dịch vụ phòng</label>
+      <label><input type="checkbox" /> Lễ tân 24h</label>
+      <label><input type="checkbox" /> Trung tâm thể dục</label>
+      <label><input type="checkbox" /> Wi-Fi miễn phí</label>
+    </div>
+    <h3>Bữa ăn</h3>
+    <div class="filter-section">
+      <label><input type="checkbox" /> Bao gồm bữa sáng</label>
+      <label><input type="checkbox" /> Tự nấu</label>
+    </div>
+  </aside>
+
+  <!-- Main Content Area -->
+  <main class="main-content">
+    <header class="results-header">
+      <div class="inline">
+        <h4>Homestay tìm thấy: </h4>
+        <h4 id="tong_homestay"></h4>
+      </div>
+      <select>
+        <option>Sắp xếp theo: Lựa chọn hàng đầu</option>
+        <option>Giá thấp nhất</option>
+        <option>Xếp hạng cao nhất</option>
+      </select>
+    </header>
+
+    <!-- Hotel Listings -->
+    <table id="dataTable">
+      <thead>
+        <tr>
+          <th>Khách sạn</th>
+          <th>Tỉnh</th>
+          <th>Quận</th>
+          <th>Đánh giá</th>
+          <th>Chi tiết</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Dữ liệu sẽ được thêm vào đây qua JavaScript -->
+      </tbody>
+    </table>
+  </main>
+</div>
+<script>
+  const apiUrltotalHomestay = "https://localhost:7246/api/Homestays/totalHomestay";
+  const apiUrlId0 = "https://localhost:7246/api/Homestays/Id0";
+
+  // Mảng chứa các URL ảnh
+  const imageUrls = [
+    "1.jpeg", "1caibe.jpg", "1cantho.jpg", "1catba.jpg", "1chaudoc.jpg",
+    "1dienbienphu.jpg", "1hagiang.jpg", "1haiphong.jpg", "1halong.jpg",
+    "1hoian.jpg", "1hue.jpg", "1maichau.jpg", "1ninhbinh.jpg", "1phongnha.jpg",
+    "1quangninh.jpg", "1samson.jpg", "1sapa.jpg", "1tphcm.jpg",
+    "2.jpeg", "3.jpeg", "4.jpeg", "5.jpeg", "6.jpeg", "7.jpeg", "8.jpeg",
+    "9.jpeg", "10.jpeg", "11.jpeg", "12.jpeg", "13.jpeg", "14.jpeg", "15.jpeg"
+  ];
+
+  function updateBudgetValue() {
+    const budgetRange = document.getElementById("budgetRange");
+    const budgetValue = document.getElementById("budgetValue");
+    budgetValue.textContent = `$${budgetRange.value}`;
+  }
+
+  async function load_data() {
+    try {
+      // Tính tổng homestay
+      const response = await fetch(apiUrltotalHomestay);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const totalHomestay = await response.json();
+      document.getElementById("tong_homestay").innerText = totalHomestay;
+
+      // Lấy dữ liệu bảng
+      const responsetbale = await fetch(apiUrlId0);
+      if (!responsetbale.ok) {
+        throw new Error(`HTTP error! status: ${responsetbale.status}`);
+      }
+      const data = await responsetbale.json();
+
+      // Chèn dữ liệu vào bảng
+      const tableBody = document.getElementById("dataTable").querySelector("tbody");
+      tableBody.innerHTML = ""; // Xóa dữ liệu cũ
+      data.forEach((homestay) => {
+        const randomImage = imageUrls[Math.floor(Math.random() * imageUrls.length)]; // Chọn ngẫu nhiên ảnh
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>
+            <img src="${randomImage}" alt="${homestay.name}" style="width: 100px; height: auto; border-radius: 5px; display: block; margin: 0 auto;" />
+            <span>${homestay.name}</span>
+          </td>
+          <td>${homestay.province || ""}</td>
+          <td>${homestay.district || ""}</td>
+          <td>${homestay.description || ""}</td>
+          <td>
+            <button class="button-edit" onclick="showEditForm(${homestay.homestayId})">Xem chi tiết</button>
+          </td>
+        `;
+        tableBody.appendChild(row);
+      });
+    } catch (error) {
+      console.error("Lỗi khi lấy dữ liệu từ API:", error);
+    }
+  }
+
+  async function showEditForm(id){
+    localStorage.setItem("homestayId", id);
+    window.location.href = `chitiet.html`;
+  }
+  window.onload = load_data;
+</script>
+</body>
+</html>

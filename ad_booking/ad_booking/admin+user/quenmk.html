@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quên Mật Khẩu</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+
+      .reset-container {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        width: 400px;
+      }
+
+      .reset-container h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+      }
+
+      .reset-container input {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: 16px;
+      }
+
+      .reset-container button {
+        width: 100%;
+        padding: 10px;
+        background-color: #0071c2;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+
+      .reset-container button:hover {
+        background-color: #005fa3;
+      }
+
+      .reset-container p {
+        text-align: center;
+        margin-top: 15px;
+      }
+
+      .reset-container a {
+        color: #0071c2;
+        text-decoration: none;
+      }
+
+      .reset-container a:hover {
+        text-decoration: underline;
+      }
+
+      .hidden {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="reset-container">
+      <h2>Quên Mật Khẩu</h2>
+      <!-- Gửi mã OTP -->
+      <div id="step1">
+        <input
+          type="email"
+          id="email"
+          placeholder="Nhập email đăng ký"
+          required
+        />
+        <button onclick="sendOtp()">Gửi mã OTP</button>
+      </div>
+
+      <!-- Nhập mã OTP -->
+      <div id="step2" class="hidden">
+        <input type="text" id="otp" placeholder="Nhập mã OTP" required />
+        <button onclick="verifyOtp()">Xác nhận</button>
+      </div>
+
+      <!-- Đổi mật khẩu mới -->
+      <div id="step3" class="hidden">
+        <input
+          type="password"
+          id="newPassword"
+          placeholder="Nhập mật khẩu mới"
+          required
+        />
+        <button onclick="resetPassword()">Đổi mật khẩu</button>
+      </div>
+
+      <p>Đã nhớ mật khẩu? <a href="dangnhap.html">Đăng nhập</a></p>
+    </div>
+
+    <script>
+      let generatedOtp = "";
+
+      // Bước 1: Gửi mã OTP
+      function sendOtp() {
+        const email = document.getElementById("email").value.trim();
+
+        if (!email) {
+          alert("Vui lòng nhập email.");
+          return;
+        }
+
+        // Kiểm tra email tồn tại trong danh sách tài khoản
+        const storedAccounts =
+          JSON.parse(localStorage.getItem("accounts")) || [];
+        const account = storedAccounts.find((acc) => acc.email === email);
+
+        if (!account) {
+          alert("Email không tồn tại trong hệ thống.");
+          return;
+        }
+
+        // Giả lập gửi OTP
+        generatedOtp = Math.floor(100000 + Math.random() * 900000).toString(); // Mã OTP ngẫu nhiên 6 chữ số
+        alert(`Mã OTP của bạn là: ${generatedOtp}`); // Hiển thị OTP trong alert để thử nghiệm
+
+        // Chuyển sang bước nhập mã OTP
+        document.getElementById("step1").classList.add("hidden");
+        document.getElementById("step2").classList.remove("hidden");
+      }
+
+      // Bước 2: Xác nhận mã OTP
+      function verifyOtp() {
+        const otp = document.getElementById("otp").value.trim();
+
+        if (otp !== generatedOtp) {
+          alert("Mã OTP không đúng. Vui lòng thử lại.");
+          return;
+        }
+
+        // Chuyển sang bước đổi mật khẩu
+        document.getElementById("step2").classList.add("hidden");
+        document.getElementById("step3").classList.remove("hidden");
+      }
+
+      // Bước 3: Đổi mật khẩu
+      function resetPassword() {
+        const newPassword = document.getElementById("newPassword").value.trim();
+
+        if (!newPassword) {
+          alert("Vui lòng nhập mật khẩu mới.");
+          return;
+        }
+
+        const email = document.getElementById("email").value.trim();
+
+        // Cập nhật mật khẩu
+        const storedAccounts =
+          JSON.parse(localStorage.getItem("accounts")) || [];
+        const account = storedAccounts.find((acc) => acc.email === email);
+
+        if (account) {
+          account.password = newPassword;
+          localStorage.setItem("accounts", JSON.stringify(storedAccounts));
+          alert("Đổi mật khẩu thành công! Vui lòng đăng nhập.");
+          window.location.href = "dangnhap.html"; // Chuyển về trang đăng nhập
+        }
+      }
+    </script>
+  </body>
+</html>

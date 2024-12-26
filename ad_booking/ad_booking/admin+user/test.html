@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Ngày Giờ</title>
+  <script>
+      function getFormattedDateAsLong() {
+          const date = new Date(); // Lấy ngày hiện tại
+          const year = date.getFullYear(); // Lấy năm (ví dụ: 2024)
+          const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Tháng (01-12)
+          const day = date.getDate().toString().padStart(2, '0'); // Ngày (01-31)
+
+          // Gộp các phần thành chuỗi "YYYYMMDD"
+          const formattedDate = `${year}${month}${day}`;
+
+          // Chuyển chuỗi thành số nguyên kiểu long
+          return parseInt(formattedDate);
+      }
+
+      function displayFormattedDate() {
+          const dateLong = getFormattedDateAsLong();
+          document.getElementById("formattedDate").innerText = dateLong;
+      }
+  </script>
+</head>
+<body onload="displayFormattedDate()">
+  <h1>Kiểm Tra Ngày Giờ</h1>
+  <p>Ngày hiện tại dưới định dạng "YYYYMMDD" là:</p>
+  <h2 id="formattedDate"></h2>
+</body>
+</html>

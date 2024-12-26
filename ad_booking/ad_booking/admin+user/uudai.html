@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Travel Offers</title>
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+      }
+
+      body {
+        background-color: #f5f5f5;
+        display: flex;
+        justify-content: center;
+        padding: 20px;
+        flex-direction: column;
+      }
+
+      .container {
+        margin-left: 15%;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+        max-width: 1200px;
+      }
+
+      .offer-card {
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        position: relative;
+        text-align: center;
+      }
+
+      .offer-card img {
+        width: 100%;
+        height: auto;
+      }
+
+      .badge {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background-color: #28a745;
+        color: white;
+        font-size: 14px;
+        padding: 4px 8px;
+        border-radius: 4px;
+      }
+
+      .info {
+        padding: 15px;
+      }
+
+      .info h3 {
+        font-size: 18px;
+        margin-bottom: 8px;
+      }
+
+      .price {
+        color: #007bff;
+        font-weight: bold;
+        margin: 5px 0;
+      }
+
+      .price-value {
+        color: #28a745;
+      }
+
+      .info p {
+        color: #555;
+        font-size: 14px;
+        margin: 4px 0;
+      }
+      /* Existing styles */
+
+      .globe-card {
+        text-align: center;
+        border: 2px dashed #ddd;
+      }
+
+      .globe-card .globe-image {
+        width: 80px;
+        height: auto;
+        margin: 20px 0;
+      }
+
+      .globe-card h3 {
+        color: #007bff;
+        font-size: 18px;
+        margin-bottom: 8px;
+      }
+
+      .explore-link {
+        display: inline-block;
+        margin-top: 10px;
+        color: #007bff;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      .explore-link:hover {
+        text-decoration: underline;
+      }
+
+      .no-grid {
+        width: 100%;
+        max-width: 800px;
+        margin: 0 auto;
+        text-align: left;
+      }
+      .faq-section {
+        padding: 20px;
+        max-width: 800px;
+        margin: 0 auto;
+        text-align: left;
+      }
+
+      .faq-section h2 {
+        font-size: 24px;
+        margin-bottom: 20px;
+      }
+
+      .faq {
+        background-color: #f8f8f8;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 10px;
+        cursor: pointer;
+        position: relative;
+      }
+
+      .faq h3 {
+        font-size: 18px;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 25px;
+      }
+
+      .faq p {
+        font-size: 14px;
+        color: #555;
+        display: none; /* Ẩn câu trả lời ban đầu */
+        margin-top: 10px;
+        font-size: 25px;
+        font-size: 20px;
+      }
+
+      .faq.open p {
+        display: block; /* Hiển thị câu trả lời khi mở */
+      }
+
+      .arrow {
+        font-size: 16px;
+        transition: transform 0.3s;
+      }
+
+      .faq.open .arrow {
+        transform: rotate(180deg); /* Xoay mũi tên khi mở */
+      }
+
+      .footer {
+        width: 190%;
+        margin-left: -45%;
+        background-color: #003580;
+        color: white;
+        padding: 20px;
+        text-align: center;
+      }
+
+      .footer a {
+        color: white;
+        text-decoration: none;
+        margin: 0 15px;
+        font-size: 14px;
+      }
+
+      .footer a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Regular offer cards -->
+      <div class="offer-card">
+        <div class="badge">463 Ưu Đãi Cuối Năm</div>
+        <img
+          src="https://q-xx.bstatic.com/xdata/images/city/1200x900/977255.jpg?k=701d538f315c17d17ca4eb5ff1a7bd0f8ed9222acebdaa6a212b638d04bef1c1&o="
+          alt="Bangkok"
+        />
+        <div class="info">
+          <h3>Bangkok</h3>
+          <p class="price">
+            Ưu đãi từ <span class="price-value">US$6</span> mỗi đêm
+          </p>
+          <p>
+            Mô tả: Thành phố nhộn nhịp với các ngôi đền, chợ nổi và ẩm thực
+            đường phố đặc sắc.
+          </p>
+          <p>Địa điểm: Thái Lan</p>
+        </div>
+      </div>
+      <div class="offer-card">
+        <div class="badge">463 Ưu Đãi Cuối Năm</div>
+        <img
+          src="https://q-xx.bstatic.com/xdata/images/city/1200x900/981517.jpg?k=2268f51ad34ab94115ea9e42155bc593aa8d48ffaa6fc58432a8760467dc4ea6&o="
+          alt="Hà Nội"
+        />
+        <div class="info">
+          <h3>Hà Nội</h3>
+          <p class="price">
+            Ưu đãi từ <span class="price-value">US$8</span> mỗi đêm
+          </p>
+          <p>
+            Mô tả: Thủ đô cổ kính với kiến trúc độc đáo và ẩm thực phong phú.
+          </p>
+          <p>Địa điểm: Việt Nam</p>
+        </div>
+      </div>
+
+      <div class="offer-card">
+        <div class="badge">316 Ưu Đãi Cuối Năm</div>
+        <img
+          src="https://q-xx.bstatic.com/xdata/images/city/1200x900/688956.jpg?k=fc88c6ab5434042ebe73d94991e011866b18ee486476e475a9ac596c79dce818&o="
+          alt="Vũng Tàu"
+        />
+        <div class="info">
+          <h3>Vũng Tàu</h3>
+          <p class="price">
+            Ưu đãi từ <span class="price-value">US$5</span> mỗi đêm
+          </p>
+          <p>Mô tả: Thành phố biển sôi động với những bãi tắm tuyệt đẹp.</p>
+          <p>Địa điểm: Việt Nam</p>
+        </div>
+      </div>
+
+      <div class="offer-card">
+        <div class="badge">309 Ưu Đãi Cuối Năm</div>
+        <img src="1tphcm.jpg" alt="TP.HCM" />
+        <div class="info">
+          <h3>TP.HCM</h3>
+          <p class="price">
+            Ưu đãi từ <span class="price-value">US$7</span> mỗi đêm
+          </p>
+          <p>
+            Mô tả: Thành phố năng động, trung tâm kinh tế và văn hóa miền Nam.
+          </p>
+          <p>Địa điểm: Việt Nam</p>
+        </div>
+      </div>
+
+      <div class="offer-card">
+        <div class="badge">268 Ưu Đãi Cuối Năm</div>
+        <img
+          src="https://q-xx.bstatic.com/xdata/images/city/1200x900/688844.jpg?k=02892d4252c5e4272ca29db5faf12104004f81d13ff9db724371de0c526e1e15&o="
+          alt="Đà Nẵng"
+        />
+        <div class="info">
+          <h3>Đà Nẵng</h3>
+          <p class="price">
+            Ưu đãi từ <span class="price-value">US$4</span> mỗi đêm
+          </p>
+          <p>
+            Mô tả: Thành phố biển xinh đẹp với cầu Vàng nổi tiếng và Bà Nà
+            Hills.
+          </p>
+          <p>Địa điểm: Việt Nam</p>
+        </div>
+      </div>
+
+      <div class="offer-card">
+        <div class="badge">131 Ưu Đãi Cuối Năm</div>
+        <img
+          src="https://q-xx.bstatic.com/xdata/images/city/1200x900/687919.jpg?k=eccf1ef09bcc42899712d36fc3972d2c1973cb7fa1d961affd01d4f8e613ff23&o="
+          alt="Đài Bắc"
+        />
+        <div class="info">
+          <h3>Đài Bắc</h3>
+          <p class="price">
+            Ưu đãi từ <span class="price-value">US$28</span> mỗi đêm
+          </p>
+          <p>Mô tả: Thủ đô sôi động với chợ đêm và Tháp 101 nổi tiếng.</p>
+          <p>Địa điểm: Đài Loan</p>
+        </div>
+      </div>
+
+      <div class="offer-card">
+        <div class="badge">309 Ưu Đãi Cuối Năm</div>
+        <img
+          src="https://q-xx.bstatic.com/xdata/images/city/1200x900/688831.jpg?k=7b999c7babe3487598fc4dd89365db2c4778827eac8cb2a47d48505c97959a78&o="
+          alt="Đà Lạt"
+        />
+        <div class="info">
+          <h3>Đà Lạt</h3>
+          <p class="price">
+            Ưu đãi từ <span class="price-value">US$6</span> mỗi đêm
+          </p>
+          <p>
+            Mô tả: Thành phố mộng mơ với những vườn hoa, hồ nước và khí hậu mát
+            mẻ.
+          </p>
+          <p>Địa điểm: Việt Nam</p>
+        </div>
+      </div>
+
+      <div class="offer-card">
+        <div class="badge">268 Ưu Đãi Cuối Năm</div>
+        <img
+          src="https://q-xx.bstatic.com/xdata/images/city/1200x900/688907.jpg?k=8a219233969467d9f7ff828918cce2a53b4db6f1da1039d27222441ffb97c409&o="
+          alt="Nha Trang"
+        />
+        <div class="info">
+          <h3>Nha Trang</h3>
+          <p class="price">
+            Ưu đãi từ <span class="price-value">US$2</span> mỗi đêm
+          </p>
+          <p>
+            Mô tả: Thành phố biển nổi tiếng với các đảo và khu nghỉ dưỡng tuyệt
+            đẹp.
+          </p>
+          <p>Địa điểm: Việt Nam</p>
+        </div>
+      </div>
+
+      <div class="offer-card">
+        <div class="badge">173 Ưu Đãi Cuối Năm</div>
+        <img
+          src="https://q-xx.bstatic.com/xdata/images/city/1200x900/688867.jpg?k=15584889423b53b870736327a2ed9ba74280161e1567b20e5788ef8c03ac0a06&o="
+          alt="Hạ Long"
+        />
+        <div class="info">
+          <h3>Hạ Long</h3>
+          <p class="price">
+            Ưu đãi từ <span class="price-value">US$3</span> mỗi đêm
+          </p>
+          <p>
+            Mô tả: Vịnh Hạ Long kỳ quan thiên nhiên với hàng nghìn đảo đá vôi.
+          </p>
+          <p>Địa điểm: Việt Nam</p>
+        </div>
+      </div>
+      <div class="offer-card">
+        <div class="badge">202 Ưu Đãi Cuối Năm</div>
+        <img
+          src="https://q-xx.bstatic.com/xdata/images/city/1200x900/688879.jpg?k=82ca0089828054a1a9c46b14ea7f1625d73d42505ae58761e8bcc067f9e72475&o="
+          alt="Phú Quốc"
+        />
+        <div class="info">
+          <h3>Phú Quốc</h3>
+          <p class="price">
+            Ưu đãi từ <span class="price-value">US$4</span> mỗi đêm
+          </p>
+          <p>
+            Mô tả: Hòn đảo xinh đẹp với các bãi biển cát trắng và nước biển
+            trong xanh.
+          </p>
+          <p>Địa điểm: Việt Nam</p>
+        </div>
+      </div>
+
+      <div class="offer-card">
+        <div class="badge">316 Ưu Đãi Cuối Năm</div>
+        <img src="1hoian.jpg" alt="Hội An" />
+        <div class="info">
+          <h3>Hội An</h3>
+          <p class="price">
+            Ưu đãi từ <span class="price-value">US$4</span> mỗi đêm
+          </p>
+          <p>
+            Mô tả: Phố cổ nổi tiếng với kiến trúc độc đáo, đèn lồng rực rỡ và ẩm
+            thực phong phú.
+          </p>
+          <p>Địa điểm: Việt Nam</p>
+        </div>
+      </div>
+
+      <!-- Other offer cards... -->
+
+      <!-- Special globe card at the end -->
+      <div class="offer-card globe-card" id="global-offers">
+        <img
+          src="https://t-cf.bstatic.com/design-assets/assets/v3.134.0/illustrations-traveller/MoreDealsAvailable.png"
+          style="height: 200px; width: 200px"
+          alt="Globe"
+          class="globe-image"
+        />
+        <div class="info">
+          <h3>Ưu đãi trên khắp thế giới</h3>
+          <p>Thử khám phá một nơi mà bạn luôn muốn đến</p>
+          <a href="#" class="explore-link">Tìm điểm đến khác</a>
+        </div>
+      </div>
+    </div>
+    <div class="no-grid">
+      <div class="faq-section">
+        <br />
+        <h2 style="font-size: 50px">Các câu hỏi thường gặp</h2>
+        <div class="faq">
+          <h3>
+            Tôi có thể tiết kiệm được bao nhiêu với Ưu Đãi Cuối Năm?
+            <span class="arrow">▼</span>
+          </h3>
+          <p>
+            Ưu Đãi Cuối Năm giảm từ 15% và có thể cao hơn. Giảm giá này áp dụng
+            trên giá trước thuế và phí.
+          </p>
+        </div>
+        <div class="faq">
+          <h3>
+            Ưu Đãi Cuối Năm áp dụng cho các lưu trú trong thời gian nào?
+            <span class="arrow">▼</span>
+          </h3>
+          <p>
+            Ưu Đãi Cuối Năm áp dụng tại các chỗ nghỉ tham gia chương trình trên
+            khắp thế giới cho các kỳ lưu trú từ 1/10/2024 đến 7/1/2025.
+          </p>
+        </div>
+        <div class="faq">
+          <h3>
+            Khi nào tôi có thể đặt với Ưu Đãi Cuối Năm?
+            <span class="arrow">▼</span>
+          </h3>
+          <p>Bạn có thể đặt với Ưu Đãi Cuối Năm từ 4/9/2024 đến 7/1/2025.</p>
+        </div>
+      </div>
+
+      <div class="footer">
+        <a href="#">Phiên bản di động</a> | <a href="#">Tài khoản của bạn</a> |
+        <a href="#">Thay đổi đặt phòng của bạn trực tuyến</a> |
+        <a href="#">Dịch vụ khách hàng</a> |
+        <a href="#">Trở thành đối tác phân phối</a> |
+        <a href="#">Booking.com for Business</a>
+        <div style="margin-top: 15px">
+          <button
+            style="
+              padding: 10px 20px;
+              background-color: white;
+              color: #003580;
+              border: none;
+              border-radius: 5px;
+              font-weight: bold;
+            "
+          >
+            Đăng chỗ nghỉ của Quý vị
+          </button>
+        </div>
+      </div>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const container = document.querySelector(".container");
+        const globalOffers = document.getElementById("global-offers");
+        const storedItems =
+          JSON.parse(localStorage.getItem("uploadedItems")) || [];
+
+        storedItems.forEach((item) => {
+          const card = document.createElement("div");
+          card.classList.add("offer-card");
+
+          const badge = document.createElement("div");
+          badge.classList.add("badge");
+          badge.textContent = "Ưu Đãi Đặc Biệt";
+
+          const img = document.createElement("img");
+          img.src = item.imageSrc;
+          img.alt = item.name;
+
+          const info = document.createElement("div");
+          info.classList.add("info");
+
+          const title = document.createElement("h3");
+          title.textContent = item.name;
+
+          const price = document.createElement("p");
+          price.classList.add("price");
+          price.innerHTML = `Ưu đãi từ <span class="price-value">US$${item.price}</span> mỗi đêm`;
+
+          const description = document.createElement("p");
+          description.textContent = `Mô tả: ${item.details}`;
+
+          const location = document.createElement("p");
+          location.textContent = `Địa điểm: ${item.location}`;
+
+          info.appendChild(title);
+          info.appendChild(price);
+          info.appendChild(description);
+          info.appendChild(location);
+
+          card.appendChild(badge);
+          card.appendChild(img);
+          card.appendChild(info);
+
+          container.insertBefore(card, globalOffers);
+        });
+      });
+    </script>
+    <!-- JavaScript for FAQ Toggle -->
+    <script>
+      document.querySelectorAll(".faq").forEach((item) => {
+        item.addEventListener("click", () => {
+          item.classList.toggle("open");
+        });
+      });
+    </script>
+  </body>
+</html>

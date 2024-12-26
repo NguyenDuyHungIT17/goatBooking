@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Giao diện Chat</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-color: #18191a;
+        color: #e4e6eb;
+      }
+
+      .messenger {
+        width: 370px;
+        height: 600px;
+        margin: 50px auto;
+        display: flex;
+        flex-direction: column;
+        border: 1px solid #242526;
+        background-color: #242526;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      .messenger-header {
+        padding: 10px;
+        background-color: #3a3b3c;
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid #484a4d;
+      }
+
+      .user-info {
+        display: flex;
+        align-items: center;
+      }
+
+      .avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 10px;
+      }
+
+      .user-name {
+        font-size: 16px;
+        font-weight: bold;
+      }
+
+      .chat-content {
+        flex: 1;
+        padding: 10px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .message {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start; /* Mặc định tin nhắn bên trái */
+      }
+
+      .message.right {
+        align-items: flex-end; /* Tin nhắn bên phải */
+      }
+
+      .bubble {
+        background-color: #3e4042;
+        padding: 10px;
+        border-radius: 20px;
+        max-width: 80%;
+        word-wrap: break-word;
+      }
+
+      .bubble.right {
+        background-color: #2d88ff; /* Màu xanh tin nhắn của người dùng */
+        color: white;
+      }
+
+      .messenger-footer {
+        padding: 10px;
+        background-color: #3a3b3c;
+        display: flex;
+        align-items: center;
+        border-top: 1px solid #484a4d;
+        gap: 10px;
+      }
+
+      .input {
+        flex: 1;
+        padding: 10px;
+        border: none;
+        border-radius: 20px;
+        background-color: #484a4d;
+        color: #e4e6eb;
+      }
+
+      .like-btn,
+      .send-btn {
+        width: 40px;
+        height: 40px;
+        border: none;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+      }
+
+      .like-btn {
+        background-color: #3e4042;
+        color: #2d88ff;
+        font-size: 30px;
+      }
+
+      .like-btn:hover {
+        background-color: #484a4d;
+      }
+
+      .send-btn {
+        background-color: #2d88ff;
+        color: white;
+        font-size: 30px;
+      }
+
+      .send-btn:hover {
+        background-color: #2369d1;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="messenger">
+      <header class="messenger-header">
+        <div class="user-info">
+          <img src="user-avatar.png" alt="Avatar" class="avatar" />
+          <span class="user-name">Admin</span>
+        </div>
+      </header>
+      <div class="chat-content" id="chat-content">
+        <div class="message">
+          <div class="bubble">Lô b</div>
+        </div>
+      </div>
+      <footer class="messenger-footer">
+        <input type="text" id="message-input" placeholder="Aa" class="input" />
+        <button class="send-btn" id="send-btn">➤</button>
+        <button class="like-btn" id="like-btn">👍</button>
+      </footer>
+    </div>
+    <script>
+      const chatContent = document.getElementById("chat-content");
+      const messageInput = document.getElementById("message-input");
+      const sendBtn = document.getElementById("send-btn");
+      const likeBtn = document.getElementById("like-btn");
+
+      // Hàm thêm tin nhắn vào khung chat
+      function addMessage(content, isRight = true) {
+        const messageBubble = document.createElement("div");
+        messageBubble.classList.add("message", isRight ? "right" : "");
+        messageBubble.innerHTML = `<div class="bubble ${
+          isRight ? "right" : ""
+        }">${content}</div>`;
+        chatContent.appendChild(messageBubble);
+        chatContent.scrollTop = chatContent.scrollHeight; // Cuộn xuống cuối
+      }
+
+      // Xử lý khi nhấn nút gửi
+      sendBtn.addEventListener("click", () => {
+        const message = messageInput.value.trim();
+        if (message) {
+          addMessage(message);
+          messageInput.value = ""; // Xóa nội dung ô nhập
+        }
+      });
+
+      // Gửi tin nhắn khi nhấn Enter
+      messageInput.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") {
+          sendBtn.click();
+        }
+      });
+
+      // Xử lý khi nhấn vào nút Like
+      likeBtn.addEventListener("click", () => {
+        addMessage("👍");
+      });
+    </script>
+  </body>
+</html>
